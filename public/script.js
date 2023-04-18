@@ -1,13 +1,23 @@
 const tmdbKey = '3e8183f0408cffb032afb8e322bbf11e';
-const tmdbBaseUrl = 'https://api.themoviedb.org/3';
+const tmdbBaseUrl = 'https://developers.themoviedb.org/3';
 const playBtn = document.getElementById('playBtn');
 
-const getGenres = () => {
+const getGenres = async () => {
   const genreRequestEndpoint = '/genre/movie/list';
-  const requestParams = '?api_keys${tmdbKey}';
-  const urlToFetch = '${tmbBaseURL}${genreRequestEndPoint}${requestParams};'};
-  
+  const requestParams = '?api_key=${tmdbKey}';
+  const urlToFetch = '${tmdBaseUrl}${genreRequestEndpoint}${requestParams}';
 
+  try{
+    const response = await fetch(urlToFetch);
+    if (response.ok){
+      const jsonResponse = await response.json();
+      const genres = jsonResponse.genres;
+      return genres;
+    }
+  } catch(error){
+    console.log(error);
+  };
+ };
 const getMovies = () => {
   const selectedGenre = getSelectedGenre();
 
